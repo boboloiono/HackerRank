@@ -6,15 +6,15 @@
 #define MAX_PARAGRAPHS 5
 
 char* kth_word_in_mth_sentence_of_nth_paragraph(char**** document, int k, int m, int n) {
-    return *(*(*(document+k-1)+m-1)+n-1);
+    return *(*(*(document+(n-1))+(m-1))+(k-1));
 }
 
 char** kth_sentence_in_mth_paragraph(char**** document, int k, int m) { 
-    return *(*(document+k-1)+m-1);
+    return *(*(document+(m-1))+(k-1));
 }
 
 char*** kth_paragraph(char**** document, int k) {
-    return *(document+k-1);
+    return *(document+(k-1));
 }
 
 char**** get_document(char* text) {
@@ -41,8 +41,6 @@ char**** get_document(char* text) {
             *s = 0;
             word = NULL;
         } else if(*s=='\n'){
-            *s = 0;
-            word = NULL;
              
             i_word = 0;
             i_sentence = 0;
@@ -52,6 +50,8 @@ char**** get_document(char* text) {
             doc[i_paragraph] = (char ***) malloc(sizeof(char **));
             doc[i_paragraph][i_sentence] = (char **) malloc(sizeof(char *));
             
+            *s = 0;
+            word = NULL;
         }
         else{
             if (word == NULL)
